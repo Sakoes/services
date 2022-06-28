@@ -50,18 +50,13 @@ message:
 
 # Optional navbar
 # links: [] # Allows for navbar (dark mode, layout, and search) without any links
-links:
-  - name: "Github"
-    icon: "fab fa-github"
-    url: "https://github.com/Sakoes?tab=repositories"
-  - name: "Wiki"
-    icon: "fas fa-book"
-    url: "https://www.wikipedia.org/"
-  # this will link to a second homer page that will load config from additional-page.yml and keep default config values as in config.yml file
-  # see url field and assets/additional-page.yml.dist used in this example:
-  #- name: "another page!"
-  #  icon: "fas fa-file-alt"
-  #  url: "#additional-page" 
+#links:
+  #- name: "Github"
+    #icon: "fab fa-github"
+    #url: "https://github.com/Sakoes?tab=repositories"
+  #- name: "Wiki"
+    #icon: "fas fa-book"
+    #url: "https://www.wikipedia.org/"
 
 # Services
 # First level array represent a group.
@@ -72,8 +67,32 @@ services:
     items:
       - name: "Portainer"
         logo: "assets/tools/portainer.svg"
-        subtitle: "Container Managenment"
-        url: "http://192.168.0.103:9000/"
+        #subtitle: "Container Managenment"
+        url: "http://pihome:9000/"
         type: "Portainer"
-        #apikey: "ptr_J/RSkub6vtVZSdqEQe0alScCAbaddLocuXbZb9R2DO4="
+        apikey: "ptr_J/RSkub6vtVZSdqEQe0alScCAbaddLocuXbZb9R2DO4="
         #apikey: "RSkub6vtVZSdqEQe0alScCAbaddLocuXbZb9R2DO4="
+
+  - name: "Infrastructure"
+    icon: "fas fa-server"
+    items:
+      - name: TP-link Router
+        subtitle: "Link to Pi router"
+        logo: "assets/tools/tp-link-logo.png"
+        url: http://192.168.0.1
+
+  - name: "Automation"
+    icon: "fas fa-robot"
+    items:
+      - name: Jenkins
+        icon: "fab fa-jenkins"
+        subtitle: "CI / CD automation"
+        url: http://pihome:8083/
+
+  - name: "Quick links"
+    icon: "fas fa-external-link"
+    items:
+      - name: "Github"
+        subtitle: "Personal Github Repo's"
+        icon: "fab fa-github"
+        url: "https://github.com/Sakoes?tab=repositories"
