@@ -5,5 +5,5 @@
 # Except docker-compose.yml
 !.gitignore
 !docker-compose.yml
-!/homer/data/tools/*.*
+!/homer/data/tools/*
 !/homer/data/config.yml
