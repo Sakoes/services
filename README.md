@@ -1,6 +1,6 @@
 # services
 This repository contains docker-compose files to experiment with interesting tools & services. This repo is not in use anymore since shifting to k3s instead of docker-compose.  
-Check the ansible k3s-install repo for a more updated view
+Check the ansible k3s-install repo for a more up-to-date view
 
 ## homer
 > A dead simple static HOMepage for your servER to keep your services on hand, from a simple yaml configuration file.
