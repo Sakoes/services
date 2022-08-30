@@ -1,5 +1,5 @@
 # services
-This repository contains docker-compose files for tools & services I experiment with.
+This repository contains docker-compose files to experiment with interesting tools & services. This repo is not in use anymore since shifting to k3s instead of docker-compose
 
 ## homer
 > A dead simple static HOMepage for your servER to keep your services on hand, from a simple yaml configuration file.
