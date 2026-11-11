@@ -1,0 +1,15 @@
+entryPoints:
+  web:
+    address: "192.168.129.31:80"
+    transport:
+      respondingTimeouts:
+        # Drone imagery uploads can take longer than the default read timeout.
+        readTimeout: 0s
+
+providers:
+  file:
+    filename: /etc/traefik/routes.yml
+    watch: false
+
+api:
+  dashboard: false

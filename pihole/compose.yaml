@@ -1,0 +1,23 @@
+services:
+  pihole:
+    image: pihole/pihole:latest
+    ports:
+      - "${PIHOLE_DNS_BIND:-192.168.129.31}:53:53/tcp"
+      - "${PIHOLE_DNS_BIND:-192.168.129.31}:53:53/udp"
+      - "${PIHOLE_WEB_BIND:-127.0.0.1:8081}:80/tcp"
+    environment:
+      TZ: ${TZ:-Europe/Brussels}
+      FTLCONF_webserver_api_password: ${WEBPASSWORD:?Set WEBPASSWORD in /var/lib/pihole/secrets.env}
+      FTLCONF_misc_dnsmasq_lines: "addn-hosts=/etc/pihole/custom.list"
+      FTLCONF_dns_listeningMode: "ALL"
+    volumes:
+      - /srv/services/pihole/etc-pihole:/etc/pihole
+      - /srv/services/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
+      - ./custom.list:/etc/pihole/custom.list:ro
+    cap_add:
+      - NET_ADMIN
+    logging:
+      driver: journald
+      options:
+        tag: compose-pihole.service
+    restart: unless-stopped

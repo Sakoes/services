@@ -1,0 +1,14 @@
+services:
+  traefik:
+    image: traefik:v3.6.0
+    network_mode: host
+    command:
+      - --configFile=/etc/traefik/traefik.yml
+    volumes:
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./routes.yml:/etc/traefik/routes.yml:ro
+    logging:
+      driver: journald
+      options:
+        tag: compose-traefik.service
+    restart: unless-stopped

@@ -1,0 +1,146 @@
+{
+  "uid": "homelab-logs",
+  "title": "Homelab logs",
+  "tags": [
+    "homelab"
+  ],
+  "description": "Logs may contain secrets; Grafana access is sensitive. Unit/severity are indexed; identity regex filters apply after unpack. Use narrow time ranges. Textbox values cannot contain backticks.",
+  "schemaVersion": 39,
+  "version": 3,
+  "editable": false,
+  "timezone": "browser",
+  "refresh": "30s",
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "unit",
+        "label": "Unit",
+        "type": "query",
+        "datasource": {
+          "type": "loki",
+          "uid": "loki"
+        },
+        "query": {
+          "type": 1,
+          "label": "unit",
+          "stream": "{host=\"homelab\",job=\"journal\"}"
+        },
+        "refresh": 1,
+        "includeAll": true,
+        "allValue": ".*",
+        "multi": true,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        }
+      },
+      {
+        "name": "severity",
+        "label": "Severity",
+        "type": "query",
+        "datasource": {
+          "type": "loki",
+          "uid": "loki"
+        },
+        "query": {
+          "type": 1,
+          "label": "severity",
+          "stream": "{host=\"homelab\",job=\"journal\"}"
+        },
+        "refresh": 1,
+        "includeAll": true,
+        "allValue": ".*",
+        "multi": true,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        }
+      },
+      {
+        "name": "container_name",
+        "label": "Container name regex",
+        "type": "textbox",
+        "query": ".*",
+        "current": {
+          "text": ".*",
+          "value": ".*"
+        }
+      },
+      {
+        "name": "container_id",
+        "label": "Container ID regex",
+        "type": "textbox",
+        "query": ".*",
+        "current": {
+          "text": ".*",
+          "value": ".*"
+        }
+      },
+      {
+        "name": "raw_unit",
+        "label": "Raw system unit regex",
+        "type": "textbox",
+        "query": ".*",
+        "current": {
+          "text": ".*",
+          "value": ".*"
+        }
+      },
+      {
+        "name": "user_unit",
+        "label": "User unit regex",
+        "type": "textbox",
+        "query": ".*",
+        "current": {
+          "text": ".*",
+          "value": ".*"
+        }
+      },
+      {
+        "name": "search",
+        "label": "Text contains",
+        "type": "textbox",
+        "query": "",
+        "current": {
+          "text": "",
+          "value": ""
+        }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Journal and container logs",
+      "type": "logs",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 20
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "options": {
+        "showTime": true,
+        "showLogDetails": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "editorMode": "code",
+          "queryType": "range",
+          "expr": "{host=\"homelab\",job=\"journal\",unit=~`${unit:regex}`,severity=~`${severity:regex}`} | unpack | container_name=~`${container_name:raw}` | container_id=~`${container_id:raw}` | raw_unit=~`${raw_unit:raw}` | user_unit=~`${user_unit:raw}` |= `${search:raw}`"
+        }
+      ]
+    }
+  ]
+}

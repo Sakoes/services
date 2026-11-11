@@ -1,0 +1,29 @@
+- Infrastructure:
+    - Grafana:
+        icon: grafana.png
+        href: http://grafana.home
+        description: Host metrics and system/container logs
+    - Pi-hole:
+        icon: pi-hole.png
+        href: http://pihole.home/admin/
+        description: DNS and network-wide ad blocking
+    - Home Assistant:
+        icon: home-assistant.png
+        href: http://home-assistant.home
+        description: Home automation
+
+- Media:
+    - Stremio:
+        icon: stremio.png
+        href: http://stremio.home
+        description: Streaming server
+
+- Mapping:
+    - WebODM:
+        icon: mdi-map
+        href: http://webodm.home
+        description: Drone imagery and mapping
+    - NodeODM:
+        icon: mdi-server
+        href: http://nodeodm.home
+        description: Photogrammetry processing API

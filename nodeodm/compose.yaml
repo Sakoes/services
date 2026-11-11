@@ -1,0 +1,13 @@
+version: "3"
+services:
+  nodeodm:
+    image: opendronemap/nodeodm:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - /srv/services/nodeodm:/var/www/data
+    logging:
+      driver: journald
+      options:
+        tag: compose-nodeodm.service
+    restart: unless-stopped

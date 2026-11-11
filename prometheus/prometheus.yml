@@ -1,0 +1,31 @@
+global:
+  scrape_interval: 30s
+
+# Whichever limit is reached first applies; size is not a filesystem quota.
+storage:
+  tsdb:
+    retention:
+      time: 7d
+      size: 20GB
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["127.0.0.1:9090"]
+        labels:
+          host: homelab
+  - job_name: alloy
+    static_configs:
+      - targets: ["127.0.0.1:12345"]
+        labels:
+          host: homelab
+  - job_name: loki
+    static_configs:
+      - targets: ["127.0.0.1:3100"]
+        labels:
+          host: homelab
+  - job_name: node
+    static_configs:
+      - targets: ["127.0.0.1:9100"]
+        labels:
+          host: homelab

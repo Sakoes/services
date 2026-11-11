@@ -1,0 +1,9 @@
+# Local DNS records loaded via addn-hosts; manage these here, not in the web UI.
+192.168.129.31 homelab.home
+192.168.129.31 pihole.home
+192.168.129.31 home-assistant.home
+192.168.129.31 stremio.home
+192.168.129.31 nodeodm.home
+192.168.129.31 webodm.home
+
+192.168.129.31 grafana.home

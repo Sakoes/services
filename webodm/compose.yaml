@@ -1,0 +1,75 @@
+# Vendored from https://github.com/OpenDroneMap/WebODM/blob/master/docker-compose.yml
+# This configuration does not include a processing node — add one in the
+# WebODM UI (e.g. the nodeodm stack on this host, <host>:3000).
+version: '2.1'
+services:
+  db:
+    image: webodm/webodm_db
+    container_name: webodm_db
+    expose:
+      - "5432"
+    volumes:
+      - /srv/services/webodm/db:/var/lib/postgresql/data:Z
+    logging:
+      driver: journald
+      options:
+        tag: compose-webodm.service
+    restart: unless-stopped
+    oom_score_adj: -100
+  webapp:
+    image: webodm/webodm_webapp
+    container_name: webodm_webapp
+    entrypoint: /bin/bash -c "service cron start && chmod +x /webodm/*.sh && /bin/bash -c \"/webodm/wait-for-postgres.sh db /webodm/wait-for-it.sh -t 0 broker:6379 -- /webodm/start.sh\""
+    volumes:
+      - /srv/services/webodm/media:/webodm/app/media:z
+    ports:
+      - "${WO_PORT:-8000}:8000/tcp"
+      - "${WO_PORT:-8000}:8000/udp"
+    depends_on:
+      - db
+      - broker
+      - worker
+    environment:
+      WO_PORT: "${WO_PORT:-8000}"
+      WO_HOST: "${WO_HOST:-0.0.0.0}"
+      WO_DEBUG: "${WO_DEBUG:-NO}"
+      WO_BROKER: "${WO_BROKER:-redis://broker}"
+      WO_DEV: "${WO_DEV:-NO}"
+      WO_DEV_WATCH_PLUGINS: "${WO_DEV_WATCH_PLUGINS:-NO}"
+      WO_SECRET_KEY: "${WO_SECRET_KEY:?Set WO_SECRET_KEY in /var/lib/webodm/secrets.env}"
+      WEB_CONCURRENCY: "${WEB_CONCURRENCY:-1}"
+    logging:
+      driver: journald
+      options:
+        tag: compose-webodm.service
+    restart: unless-stopped
+    oom_score_adj: 0
+  broker:
+    image: redis:7.0.10
+    container_name: webodm_broker
+    logging:
+      driver: journald
+      options:
+        tag: compose-webodm.service
+    restart: unless-stopped
+    oom_score_adj: -500
+  worker:
+    image: webodm/webodm_webapp
+    container_name: webodm_worker
+    entrypoint: /bin/bash -c "/webodm/wait-for-postgres.sh db /webodm/wait-for-it.sh -t 0 broker:6379 -- /webodm/wait-for-it.sh -t 0 webapp:8000 -- /webodm/worker.sh start"
+    volumes:
+      - /srv/services/webodm/media:/webodm/app/media:z
+    depends_on:
+      - db
+      - broker
+    environment:
+      WO_BROKER: "${WO_BROKER:-redis://broker}"
+      WO_DEBUG: "${WO_DEBUG:-NO}"
+      WO_SECRET_KEY: "${WO_SECRET_KEY:?Set WO_SECRET_KEY in /var/lib/webodm/secrets.env}"
+      WEB_CONCURRENCY: "${WEB_CONCURRENCY:-1}"
+    logging:
+      driver: journald
+      options:
+        tag: compose-webodm.service
+    restart: unless-stopped
+    oom_score_adj: 250

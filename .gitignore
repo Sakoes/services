@@ -1,0 +1,22 @@
+# Host-local inputs/state must never enter Git.
+.env
+.env.*
+!.env.example
+secrets.env
+*.key
+*.pem
+backups/
+data/
+media/
+db/
+etc-pihole/
+etc-dnsmasq.d/
+.storage/
+*.db
+*.sqlite*
+/home-assistant/automations.yaml
+__pycache__/
+.ruff_cache/
+*.pyc
+result
+result-*

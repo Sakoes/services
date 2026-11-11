@@ -1,0 +1,60 @@
+http:
+  routers:
+    grafana:
+      rule: "Host(`grafana.home`)"
+      entryPoints: [web]
+      service: grafana
+    homepage:
+      rule: "Host(`homelab.home`)"
+      entryPoints: [web]
+      service: homepage
+    pihole:
+      rule: "Host(`pihole.home`)"
+      entryPoints: [web]
+      service: pihole
+    home-assistant:
+      rule: "Host(`home-assistant.home`)"
+      entryPoints: [web]
+      service: home-assistant
+    stremio:
+      rule: "Host(`stremio.home`)"
+      entryPoints: [web]
+      service: stremio
+    nodeodm:
+      rule: "Host(`nodeodm.home`)"
+      entryPoints: [web]
+      service: nodeodm
+    webodm:
+      rule: "Host(`webodm.home`)"
+      entryPoints: [web]
+      service: webodm
+
+  services:
+    grafana:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:3002"
+    homepage:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:3001"
+    pihole:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:8081"
+    home-assistant:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:8123"
+    stremio:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:11470"
+    nodeodm:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:3000"
+    webodm:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:8000"

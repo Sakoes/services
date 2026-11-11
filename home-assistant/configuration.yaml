@@ -1,0 +1,22 @@
+# HA-equivalent of the old services.home-assistant.config/extraComponents
+# Nix attrs, vendored since the docker image has no NixOS module to render
+# this from. time_zone is omitted: the container derives it from the TZ
+# environment variable.
+default_config:
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+
+homeassistant:
+  name: Home
+  unit_system: metric
+
+met:
+esphome:
+radio_browser:
+
+# Versioned automations live in git; UI-created ones stay in the mutable file.
+automation manual: !include automations_manual.yaml
+automation ui: !include automations.yaml

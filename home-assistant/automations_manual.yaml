@@ -1,0 +1,10 @@
+# Versioned automations. Paste HA YAML automations here as a list, e.g.:
+# - alias: "Example"
+#   triggers:
+#     - trigger: sun
+#       event: sunset
+#   actions:
+#     - action: persistent_notification.create
+#       data:
+#         message: "Sun has set"
+[]

@@ -1,0 +1,15 @@
+version: "3"
+services:
+  stremio:
+    image: docker.io/stremio/server:v4.22.2
+    ports:
+      - "11470:11470"
+      - "12470:12470"
+    volumes:
+      - /srv/services/stremio:/root/.stremio-server
+      - /srv/downloads/stremio:/root/.stremio-server/stremio-cache
+    logging:
+      driver: journald
+      options:
+        tag: compose-stremio.service
+    restart: unless-stopped
